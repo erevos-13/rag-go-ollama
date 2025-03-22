@@ -1,0 +1,45 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - ENVIRONMENT=local
+      - CHROMA_URL=http://chroma:8000
+      - OLLAMA_MODEL=gemma3:1b
+      - OLLAMA_EMBEDDING_MODEL=nomic-embed-text
+      # Point to host machine instead of an Ollama container
+      - OLLAMA_HOST=host.docker.internal
+      - OLLAMA_URL=http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      app-network:
+        aliases:
+          - app
+    dns:
+      - 127.0.0.11
+    depends_on:
+      - chroma
+
+  chroma:
+    image: ghcr.io/chroma-core/chroma:0.4.14
+    ports:
+      - "8000:8000"
+    networks:
+      app-network:
+        aliases:
+          - chroma
+    volumes:
+      - chroma_data:/chroma/chroma
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.0.0/16
+
+volumes:
+  chroma_data: 
