@@ -35,7 +35,10 @@ This project implements a document Q&A system with the following components:
    cd rag-go-ollama
    ```
 
-2. Make sure Ollama is running locally with the required models:
+2. Please install Ollama locally first [Ollama link](https://ollama.com/)  
+
+
+3. Make sure Ollama is running locally with the required models:
    ```bash
    # Install models if you haven't already
    ollama pull gemma3:1b
@@ -45,7 +48,7 @@ This project implements a document Q&A system with the following components:
    ollama serve
    ```
 
-3. Start the application using Docker Compose:
+4. Start the application using Docker Compose:
    ```bash
    docker compose up -d
    ```
