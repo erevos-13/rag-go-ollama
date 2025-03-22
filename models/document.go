@@ -150,7 +150,7 @@ func SearchDocument(query string, c *gin.Context) (string, []schema.Document, er
 		return "", nil, err
 	}
 
-	const maxContextDocs = 8
+	const maxContextDocs = 2
 	docsToInclude := results
 	if len(results) > maxContextDocs {
 		docsToInclude = results[:maxContextDocs]
@@ -176,6 +176,5 @@ func SearchDocument(query string, c *gin.Context) (string, []schema.Document, er
 	if err != nil {
 		return "", nil, err
 	}
-
 	return completion, results, nil
 }
